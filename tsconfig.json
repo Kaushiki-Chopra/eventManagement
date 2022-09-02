@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "lib": [
+      "es6"
+    ],
+    "allowJs": true,
+    "outDir": "build",
+    "rootDir": "src",
+    "strict": true,
+    "noImplicitAny": false,
+    "esModuleInterop": true,
+  }
+}
+
+
+
+git config --global user.name "Kaushiki-chopra"
+
+git config --global user.email "kaushiki.chopra@innobitsystems.com"
