@@ -1,10 +1,8 @@
-const uuid = require('uuid')
-import { moveMessagePortToContext } from "worker_threads";
-// const calenderCrud = require('../services/calenderCRUD');
-import eventServiceInstance from "../services/calenderCRUD"
-
-const request = require ("supertest");
-import moment from "moment"
+import { time } from 'console';
+import exp from 'constants';
+import { Request } from 'express';
+import uuid from 'uuid';
+import eventServiceInstance from "../services/calenderCRUD";
 
 
 
@@ -12,17 +10,18 @@ import moment from "moment"
 let fakeId = uuid.v4()
 
 let eventinfo = {
-    
-    id: fakeId,
+    id : fakeId, 
     title: "good",
     description :"nice",
-    startDate: new Date('2060-06-30'),
-    endDate: "2055-09-29",
-    startTime: "18:23:00",
-    endTime: "18:24:00"
+    startDate: new Date("2036-10-28"),
+    endDate:new Date("2037-10-28"),
+    startTime:"02:23:00",
+    endTime:"02:24:00"
     
 
 }
+
+
 
 
 describe("event test cases",()=>{
@@ -32,30 +31,53 @@ describe("event test cases",()=>{
         }
 
         var event = await eventServiceInstance.createEvent(req)
-        expect(event.startDate).toStrictEqual(new Date("2060-06-30"))
-        
+        expect(event.startTime).toBe("02:23:00")
         expect(event.id).toBe(fakeId)
+        expect(event.endDate).toStrictEqual("2010-11-28")
     })
    
 
     it("get all event testcase",async()=>{
         var event = await eventServiceInstance.getEvent()
         expect(event.rows[0]).toHaveProperty('title')
+        expect(event.rows[1]).toHaveProperty('startDate')
+        expect(event.rows[0]).toHaveProperty('startDate')
     })
 
-    it('delete user successfully', async() => {
+    it("get event by ID", async() => {
+        var req = {
+            params : fakeId
+        }
+        var event = await eventServiceInstance.getEventById(req)
+        expect(event.id).toBe(fakeId)
+    })
+
+    it('delete All event successfully', async() => {
         var event = await eventServiceInstance.deleteAllEvent()
         expect(event).toBe(undefined)
+        expect(event).toBe("Successfully deleted")
+
     })
-    
 
-    
+    it('delete event successfully by ID', async () => { 
+        let event = await eventServiceInstance.deleteEventById({ params: { id: fakeId} })
+        console.log("...............",event) 
+        expect(event).toBe('event deleted successfully')
+    })
+
+    it("conflict Times", async() => {
+        let event = await eventServiceInstance.Times("3:10:00","4:10:00")
+        expect(event).toBe(false)
+        expect(event).toBe(true)
+    })
+
+
+    it("conflict Date", async() => {
+        let event = await eventServiceInstance.Dates("2059-10-21","2059-10-22")
+        expect(event).toBe(false)
+        expect(event).toBe(true)
+    })
+
+
+
 })
-function Z(arg0: number, T00: any, arg2: number, arg3: number, arg4: number, Z: any) {
-    throw new Error("Function not implemented.");
-}
-
-function T00(arg0: number, T00: any, arg2: number, arg3: number, arg4: number, Z: (arg0: number, T00: any, arg2: number, arg3: number, arg4: number, Z: any) => void) {
-    throw new Error("Function not implemented.");
-}
-

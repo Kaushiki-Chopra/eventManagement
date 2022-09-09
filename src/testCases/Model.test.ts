@@ -41,4 +41,19 @@ describe('Calender model test cases',()=>{
         expect(events[0]).toHaveProperty('endTime')
 
 });
+
+test('create event successfully',async()=>{
+    let events = await Calender.destroy()
+    expect(events).toBeInstanceOf(Object)
+    expect(events).toHaveProperty('title')
+    expect(events).toHaveProperty('description')
+    expect(events).toHaveProperty('startDate')
+    expect(events).toHaveProperty('endDate')
+    expect(events).toHaveProperty('startTime')
+    expect(events).toHaveProperty('endTime')
+
+})
+
+
+
 })
